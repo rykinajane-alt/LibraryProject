@@ -1,4 +1,7 @@
 package ru.library.libraryproject.repository;
 
-public interface GenreRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.library.libraryproject.entity.Genre;
+
+public interface GenreRepository extends JpaRepository<Genre, Integer> {
 }
