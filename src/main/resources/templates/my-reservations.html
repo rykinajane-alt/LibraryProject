@@ -1,10 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Мои бронирования — Библиотека</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-$END$
+
+<header class="header">
+  <div class="logo">📚 БИБЛИОТЕКА</div>
+
+  <div>
+    <a href="/reader">Личный кабинет</a>
+    <a href="/books">Книги</a>
+    <a href="/logout">Выйти</a>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="books-header">
+    <h1>Мои бронирования</h1>
+    <p class="subtitle">
+      Здесь отображаются забронированные вами книги
+    </p>
+  </div>
+
+  <div class="table-card">
+
+    <table class="books-table">
+
+      <thead>
+      <tr>
+        <th>Книга</th>
+        <th>Дата бронирования</th>
+        <th>Статус</th>
+        <th>Действие</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <tr th:each="reservation : ${reservations}">
+
+        <td class="book-title"
+            th:text="${reservation.book.title}">
+        </td>
+
+        <td th:text="${#temporals.format(
+                    reservation.reservationDate,
+                    'dd.MM.yyyy HH:mm'
+                )}">
+        </td>
+
+        <td>
+
+                    <span th:if="${reservation.status == 'ACTIVE'}"
+                          class="book-available">
+                        🟢 ACTIVE
+                    </span>
+
+          <span th:if="${reservation.status == 'COMPLETED'}"
+                class="book-reserved">
+                        ✅ COMPLETED
+                    </span>
+
+          <span th:if="${reservation.status == 'CANCELLED'}"
+                class="book-unavailable">
+                        ❌ CANCELLED
+                    </span>
+
+        </td>
+
+        <td>
+
+          <form
+                  th:if="${reservation.status == 'ACTIVE'}"
+                  method="post"
+                  th:action="@{/reader/reservations/{id}/cancel(id=${reservation.id})}">
+
+            <button type="submit"
+                    class="button button-small">
+              Отменить
+            </button>
+
+          </form>
+
+          <span th:if="${reservation.status != 'ACTIVE'}">
+                        —
+                    </span>
+
+        </td>
+
+      </tr>
+
+      <tr th:if="${#lists.isEmpty(reservations)}">
+        <td colspan="4">
+          У вас пока нет бронирований.
+        </td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
 </body>
 </html>

@@ -1,10 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>
+    Библиотекарь — Библиотека
+  </title>
+
+  <link rel="stylesheet"
+        href="/style.css">
+
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>
+      Рабочее место библиотекаря
+    </h1>
+
+    <p class="subtitle">
+      Управление книгами, читателями и выдачей литературы
+    </p>
+
+  </div>
+
+
+  <div class="role-grid">
+
+
+    <!-- КНИГИ -->
+
+    <a href="/books"
+       class="role-card">
+
+      <div class="role-icon">
+        📚
+      </div>
+
+      <h2>
+        Книги
+      </h2>
+
+      <p>
+        Просмотр и поиск книг библиотеки
+      </p>
+
+    </a>
+
+
+    <!-- ЧИТАТЕЛИ -->
+
+    <a href="/librarian/readers"
+       class="role-card">
+
+      <div class="role-icon">
+        👥
+      </div>
+
+      <h2>
+        Читатели
+      </h2>
+
+      <p>
+        Работа с зарегистрированными читателями
+      </p>
+
+    </a>
+
+
+    <!-- ВЫДАЧА КНИГ -->
+
+    <a href="/librarian/issue"
+       class="role-card">
+
+      <div class="role-icon">
+        📤
+      </div>
+
+      <h2>
+        Выдача книг
+      </h2>
+
+      <p>
+        Оформление выдачи книг читателям
+      </p>
+
+    </a>
+
+
+    <!-- ВОЗВРАТ КНИГ -->
+
+    <a href="/librarian/returns"
+       class="role-card">
+
+      <div class="role-icon">
+        📥
+      </div>
+
+      <h2>
+        Возврат книг
+      </h2>
+
+      <p>
+        Оформление возврата выданных книг
+      </p>
+
+    </a>
+
+
+    <!-- БРОНИРОВАНИЯ -->
+
+    <a href="/librarian/reservations"
+       class="role-card">
+
+      <div class="role-icon">
+        🔖
+      </div>
+
+      <h2>
+        Бронирования
+      </h2>
+
+      <p>
+        Работа с заявками на бронирование
+      </p>
+
+    </a>
+
+
+  </div>
+
+</div>
+
 </body>
+
 </html>

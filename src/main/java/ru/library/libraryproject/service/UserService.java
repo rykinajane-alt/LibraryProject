@@ -1,7 +1,6 @@
 package ru.library.libraryproject.service;
 
 import org.springframework.stereotype.Service;
-
 import ru.library.libraryproject.entity.Role;
 import ru.library.libraryproject.entity.User;
 import ru.library.libraryproject.repository.RoleRepository;
@@ -18,11 +17,13 @@ public class UserService {
     public UserService(
             UserRepository userRepository,
             RoleRepository roleRepository) {
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
     public User getUserByLogin(String login) {
+
         return userRepository.findByLogin(login)
                 .orElseThrow(() ->
                         new RuntimeException(
@@ -32,35 +33,51 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
     public List<Role> getAllRoles() {
+
         return roleRepository.findAll();
     }
 
-    public void updateRole(Integer userId, Integer roleId) {
+    public void updateRole(
+            Integer userId,
+            Integer roleId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("Пользователь не найден.")
+                        new RuntimeException(
+                                "Пользователь не найден."
+                        )
                 );
 
         Role role = roleRepository.findById(roleId)
                 .orElseThrow(() ->
-                        new RuntimeException("Роль не найдена.")
+                        new RuntimeException(
+                                "Роль не найдена."
+                        )
                 );
 
         user.setRole(role);
+
         userRepository.save(user);
     }
 
-    public void updateStatus(Integer userId, String status) {
+    public void updateStatus(
+            Integer userId,
+            String status) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("Пользователь не найден.")
+                        new RuntimeException(
+                                "Пользователь не найден."
+                        )
                 );
 
         user.setStatus(status);
+
         userRepository.save(user);
     }
 }

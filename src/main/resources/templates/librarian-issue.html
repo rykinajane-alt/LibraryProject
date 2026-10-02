@@ -1,10 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Выдача книг</title>
+
+  <link rel="stylesheet"
+        th:href="@{/style.css}">
+
 </head>
+
 <body>
-$END$
+
+<div class="header">
+
+  <div class="logo">
+    Библиотека
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/librarian/reservations">
+      Бронирования
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</div>
+
+
+<div class="page">
+
+  <h1>Выдача книг</h1>
+
+  <p>
+    Выберите читателя и книгу для оформления выдачи.
+  </p>
+
+
+  <!-- Сообщение об успешной выдаче -->
+
+  <div th:if="${successMessage}"
+       class="success-message"
+       th:text="${successMessage}">
+    Книга успешно выдана.
+  </div>
+
+
+  <!-- Сообщение об ошибке -->
+
+  <div th:if="${errorMessage}"
+       class="error-message"
+       th:text="${errorMessage}">
+    Произошла ошибка.
+  </div>
+
+
+  <div class="card">
+
+    <form method="post"
+          action="/librarian/issue">
+
+
+      <!-- Читатель -->
+
+      <label for="userId">
+        Читатель
+      </label>
+
+      <select id="userId"
+              name="userId"
+              required>
+
+        <option value="">
+          Выберите читателя
+        </option>
+
+        <option th:each="reader : ${readers}"
+                th:value="${reader.id}"
+                th:text="${reader.lastName + ' ' + reader.firstName + ' (' + reader.login + ')'}">
+          Иванов Иван (ivan)
+        </option>
+
+      </select>
+
+
+      <!-- Книга -->
+
+      <label for="bookId">
+        Книга
+      </label>
+
+      <select id="bookId"
+              name="bookId"
+              required>
+
+        <option value="">
+          Выберите книгу
+        </option>
+
+        <option th:each="book : ${books}"
+                th:value="${book.id}"
+                th:text="${book.title}">
+          Война и мир
+        </option>
+
+      </select>
+
+
+      <!-- Кнопка выдачи -->
+
+      <button type="submit">
+        📚 Выдать книгу
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/librarian"
+       class="button">
+      ← Вернуться в кабинет
+    </a>
+
+  </div>
+
+</div>
+
 </body>
+
 </html>

@@ -1,48 +1,40 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход в систему</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Вход в библиотеку</title>
+
+    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
 <div class="page">
+
     <div class="card">
 
-        <h1>Пожалуйста, войдите в систему</h1>
+        <h1>📚 Вход в библиотеку</h1>
 
-        <div class="error" th:if="${param.error}">
-            Неверные учетные данные
-        </div>
-
-        <div class="message" th:if="${param.logout}">
-            Вы вышли из системы
-        </div>
-
-        <form th:action="@{/login}" method="post">
+        <form method="post" action="/login">
 
             <div class="form-group">
                 <label for="username">Логин</label>
-                <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Введите логин"
-                        autocomplete="username"
-                        required>
+
+                <input type="text"
+                       id="username"
+                       name="username"
+                       placeholder="Введите логин"
+                       required>
             </div>
 
             <div class="form-group">
                 <label for="password">Пароль</label>
-                <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Введите пароль"
-                        autocomplete="current-password"
-                        required>
+
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Введите пароль"
+                       required>
             </div>
 
             <button type="submit" class="button button-full">
@@ -53,10 +45,23 @@
 
         <p style="text-align: center; margin-top: 20px;">
             Нет аккаунта?
-            <a th:href="@{/register}" class="link">Зарегистрироваться</a>
+            <a href="/register" class="link">Зарегистрироваться</a>
         </p>
 
+        <div class="error" th:if="${param.error}">
+            Неверный логин или пароль.
+        </div>
+
+        <div class="message" th:if="${param.logout}">
+            Вы вышли из системы.
+        </div>
+
+        <div class="message" th:if="${param.registered}">
+            Регистрация прошла успешно. Теперь можно войти в систему.
+        </div>
+
     </div>
+
 </div>
 
 </body>

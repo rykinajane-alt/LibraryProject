@@ -1,10 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Профиль — Библиотека</title>
+
+  <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+    <a href="/reader">Личный кабинет</a>
+    <a href="/books">Книги</a>
+    <a href="/logout">Выйти</a>
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>Мой профиль</h1>
+
+    <p class="subtitle">
+      Информация о вашей учётной записи
+    </p>
+
+  </div>
+
+
+  <div class="profile-card">
+
+    <div class="profile-row">
+      <span class="profile-label">Имя</span>
+      <span th:text="${user.firstName}">Имя</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Фамилия</span>
+      <span th:text="${user.lastName}">Фамилия</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Email</span>
+      <span th:text="${user.email}">email@example.com</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Логин</span>
+      <span th:text="${user.login}">login</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Роль</span>
+      <span th:text="${user.role.name}">READER</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Дата регистрации</span>
+      <span th:text="${#temporals.format(user.registeredAt, 'dd.MM.yyyy HH:mm')}">
+                29.09.2026 18:00
+            </span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Статус</span>
+      <span th:text="${user.status}">
+                ACTIVE
+            </span>
+    </div>
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/reader" class="button">
+      ← Вернуться в личный кабинет
+    </a>
+
+  </div>
+
+</div>
+
 </body>
 </html>

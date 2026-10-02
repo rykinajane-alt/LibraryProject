@@ -1,10 +1,100 @@
+```
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Читатель — Библиотека</title>
+
+  <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+    <a href="/books">Книги</a>
+    <a href="/logout">Выйти</a>
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>Личный кабинет читателя</h1>
+
+    <p class="subtitle">
+      Здесь можно работать с книгами и своими бронированиями
+    </p>
+
+  </div>
+
+
+  <div class="role-grid">
+
+    <a href="/books" class="role-card">
+
+      <div class="role-icon">📚</div>
+
+      <h2>Книги</h2>
+
+      <p>
+        Поиск и просмотр книг библиотеки
+      </p>
+
+    </a>
+
+
+    <a href="/reader/books" class="role-card">
+
+      <div class="role-icon">📖</div>
+
+      <h2>Мои книги</h2>
+
+      <p>
+        Просмотр выданных мне книг
+      </p>
+
+    </a>
+
+
+    <a href="/reader/reservations" class="role-card">
+
+      <div class="role-icon">🔖</div>
+
+      <h2>Мои бронирования</h2>
+
+      <p>
+        Просмотр и управление бронированиями
+      </p>
+
+    </a>
+
+
+    <a href="/reader/profile" class="role-card">
+
+      <div class="role-icon">👤</div>
+
+      <h2>Профиль</h2>
+
+      <p>
+        Просмотр данных своей учётной записи
+      </p>
+
+    </a>
+
+  </div>
+
+</div>
+
 </body>
 </html>
+```

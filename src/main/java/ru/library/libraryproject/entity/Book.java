@@ -1,7 +1,7 @@
+
 package ru.library.libraryproject.entity;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +39,23 @@ public class Book {
     public Book() {
     }
 
-    public Book(Integer id, String title, String isbn,
-                Integer publicationYear, String description,
-                Genre genre, List<Author> authors) {
+    public Book(
+            Integer id,
+            String title,
+            String isbn,
+            Integer publicationYear,
+            String description,
+            Genre genre,
+            List<Author> authors) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
         this.publicationYear = publicationYear;
         this.description = description;
         this.genre = genre;
-        this.authors = authors;
+        this.authors = authors == null
+                ? new ArrayList<>()
+                : new ArrayList<>(authors);
     }
 
     public Integer getId() {
@@ -104,6 +111,8 @@ public class Book {
     }
 
     public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+        this.authors = authors == null
+                ? new ArrayList<>()
+                : new ArrayList<>(authors);
     }
 }

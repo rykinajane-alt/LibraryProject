@@ -1,10 +1,304 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Добавление книги — Библиотека</title>
+
+  <link rel="stylesheet" href="/style.css">
+
 </head>
+
+
 <body>
-$END$
+
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Личный кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+
+  <div class="books-header">
+
+    <h1>
+      Добавление книги
+    </h1>
+
+    <p class="subtitle">
+      Добавление новой книги и её экземпляров
+    </p>
+
+  </div>
+
+
+  <!-- Сообщение об успешном добавлении -->
+
+  <div
+          class="success-message"
+          th:if="${successMessage}"
+          th:text="${successMessage}">
+  </div>
+
+
+  <!-- Сообщение об ошибке -->
+
+  <div
+          class="error-message"
+          th:if="${errorMessage}"
+          th:text="${errorMessage}">
+  </div>
+
+
+  <div class="card">
+
+
+    <form
+            method="post"
+            action="/librarian/books/add">
+
+
+      <!-- Название -->
+
+      <div class="form-group">
+
+        <label for="title">
+          Название книги *
+        </label>
+
+        <input
+                type="text"
+                id="title"
+                name="title"
+                required
+                maxlength="255"
+                placeholder="Введите название книги">
+
+      </div>
+
+
+      <!-- Автор -->
+
+      <div class="form-group">
+
+        <label for="authorId">
+          Автор *
+        </label>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+
+          <select
+                  id="authorId"
+                  name="authorId"
+                  required
+                  style="flex: 1;">
+
+            <option value="">
+              Выберите автора
+            </option>
+
+            <option
+                    th:each="author : ${authors}"
+                    th:value="${author.id}"
+                    th:text="${author.lastName + ' ' + author.firstName}">
+            </option>
+
+          </select>
+
+
+          <a
+                  href="/librarian/authors/add"
+                  class="button button-small"
+                  style="white-space: nowrap;">
+
+            ➕ Новый автор
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- Жанр -->
+
+      <div class="form-group">
+
+        <label for="genreId">
+          Жанр *
+        </label>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+
+          <select
+                  id="genreId"
+                  name="genreId"
+                  required
+                  style="flex: 1;">
+
+            <option value="">
+              Выберите жанр
+            </option>
+
+            <option
+                    th:each="genre : ${genres}"
+                    th:value="${genre.id}"
+                    th:text="${genre.name}">
+            </option>
+
+          </select>
+
+
+          <a
+                  href="/librarian/genres/add"
+                  class="button button-small"
+                  style="white-space: nowrap;">
+
+            ➕ Новый жанр
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- ISBN -->
+
+      <div class="form-group">
+
+        <label for="isbn">
+          ISBN
+        </label>
+
+        <input
+                type="text"
+                id="isbn"
+                name="isbn"
+                maxlength="20"
+                placeholder="Например, 9780000000031">
+
+      </div>
+
+
+      <!-- Год -->
+
+      <div class="form-group">
+
+        <label for="publicationYear">
+          Год издания
+        </label>
+
+        <input
+                type="number"
+                id="publicationYear"
+                name="publicationYear"
+                min="1"
+                max="2100"
+                placeholder="Например, 2026">
+
+      </div>
+
+
+      <!-- Количество экземпляров -->
+
+      <div class="form-group">
+
+        <label for="copiesCount">
+          Количество экземпляров *
+        </label>
+
+        <input
+                type="number"
+                id="copiesCount"
+                name="copiesCount"
+                min="1"
+                max="1000"
+                value="1"
+                required>
+
+        <small>
+          Будут созданы отдельные экземпляры книги
+        </small>
+
+      </div>
+
+
+      <!-- Описание -->
+
+      <div class="form-group">
+
+        <label for="description">
+          Описание
+        </label>
+
+        <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Краткое описание книги"></textarea>
+
+      </div>
+
+
+      <!-- Кнопки -->
+
+      <div style="margin-top: 25px;">
+
+        <button
+                type="submit"
+                class="button">
+
+          ➕ Добавить книгу
+
+        </button>
+
+
+        <a
+                href="/books"
+                class="button button-small"
+                style="margin-left: 10px;">
+
+          Отмена
+
+        </a>
+
+      </div>
+
+
+    </form>
+
+
+  </div>
+
+
+</div>
+
+
 </body>
+
 </html>

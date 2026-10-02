@@ -1,10 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>
+    Читатель — Библиотека
+  </title>
+
+  <link rel="stylesheet"
+        th:href="@{/style.css}">
+
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/librarian/reservations">
+      Бронирования
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>
+      Карточка читателя
+    </h1>
+
+    <p class="subtitle"
+       th:text="${reader.lastName + ' ' + reader.firstName}">
+      Иван Иванов
+    </p>
+
+  </div>
+
+
+  <!-- Информация о читателе -->
+
+  <div class="profile-card">
+
+    <div class="profile-row">
+
+            <span class="profile-label">
+                Фамилия
+            </span>
+
+      <span th:text="${reader.lastName}">
+                Иванов
+            </span>
+
+    </div>
+
+
+    <div class="profile-row">
+
+            <span class="profile-label">
+                Имя
+            </span>
+
+      <span th:text="${reader.firstName}">
+                Иван
+            </span>
+
+    </div>
+
+
+    <div class="profile-row">
+
+            <span class="profile-label">
+                Логин
+            </span>
+
+      <span th:text="${reader.login}">
+                ivan
+            </span>
+
+    </div>
+
+
+    <div class="profile-row">
+
+            <span class="profile-label">
+                Email
+            </span>
+
+      <span th:text="${reader.email}">
+                ivan@example.com
+            </span>
+
+    </div>
+
+
+    <div class="profile-row">
+
+            <span class="profile-label">
+                Статус
+            </span>
+
+      <span th:text="${reader.status}">
+                ACTIVE
+            </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- Выданные книги -->
+
+  <h2 style="margin-top: 35px;">
+    📚 Выданные книги
+  </h2>
+
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Книга
+        </th>
+
+        <th>
+          Экземпляр
+        </th>
+
+        <th>
+          Дата выдачи
+        </th>
+
+        <th>
+          Вернуть до
+        </th>
+
+        <th>
+          Статус
+        </th>
+
+      </tr>
+
+      </thead>
+
+      <tbody>
+
+      <tr th:each="loan : ${loans}"
+          th:if="${loan.status == 'ACTIVE'}">
+
+        <td th:text="${loan.copy.book.title}">
+          Война и мир
+        </td>
+
+        <td th:text="${loan.copy.inventoryNumber}">
+          BK-001-1
+        </td>
+
+        <td th:text="${loan.issueDate}">
+          2026-09-30
+        </td>
+
+        <td th:text="${loan.dueDate}">
+          2026-10-10
+        </td>
+
+        <td>
+          Выдана
+        </td>
+
+      </tr>
+
+
+      <!-- Если активных выдач нет -->
+
+      <tr th:if="${#lists.isEmpty(loans.?[status == 'ACTIVE'])}">
+
+        <td colspan="5"
+            style="text-align: center; padding: 25px;">
+
+          У читателя сейчас нет выданных книг.
+
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/librarian/readers"
+       class="button">
+      ← Вернуться к читателям
+    </a>
+
+  </div>
+
+</div>
+
 </body>
+
 </html>

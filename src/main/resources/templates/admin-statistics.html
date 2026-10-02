@@ -1,10 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Статистика — Библиотека</title>
+
+  <link rel="stylesheet"
+        href="/style.css">
+
 </head>
+
+
 <body>
-$END$
+
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/admin">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+
+  <div class="books-header">
+
+    <h1>
+      Статистика
+    </h1>
+
+    <p class="subtitle">
+      Основные показатели работы библиотеки
+    </p>
+
+  </div>
+
+
+  <div class="role-grid">
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        📚
+      </div>
+
+      <h2>
+        Книги
+      </h2>
+
+      <p>
+        Всего книг:
+        <strong th:text="${totalBooks}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        📦
+      </div>
+
+      <h2>
+        Экземпляры
+      </h2>
+
+      <p>
+        Всего экземпляров:
+        <strong th:text="${totalCopies}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        🟢
+      </div>
+
+      <h2>
+        Доступно
+      </h2>
+
+      <p>
+        Свободных экземпляров:
+        <strong th:text="${availableCopies}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        📕
+      </div>
+
+      <h2>
+        Выдано
+      </h2>
+
+      <p>
+        Выданных экземпляров:
+        <strong th:text="${issuedCopies}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        👥
+      </div>
+
+      <h2>
+        Пользователи
+      </h2>
+
+      <p>
+        Всего пользователей:
+        <strong th:text="${totalUsers}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        👤
+      </div>
+
+      <h2>
+        Читатели
+      </h2>
+
+      <p>
+        Зарегистрированных читателей:
+        <strong th:text="${readers}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        🔖
+      </div>
+
+      <h2>
+        Бронирования
+      </h2>
+
+      <p>
+        Активных бронирований:
+        <strong th:text="${activeReservations}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+    <div class="role-card">
+
+      <div class="role-icon">
+        📖
+      </div>
+
+      <h2>
+        Выдачи
+      </h2>
+
+      <p>
+        Активных выдач:
+        <strong th:text="${activeLoans}">
+          0
+        </strong>
+      </p>
+
+    </div>
+
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/admin"
+       class="button">
+
+      ← Вернуться в кабинет
+
+    </a>
+
+  </div>
+
+
+</div>
+
+
 </body>
+
 </html>

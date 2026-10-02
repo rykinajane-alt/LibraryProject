@@ -1,10 +1,226 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Возврат книг — Библиотека</title>
+
+  <link rel="stylesheet"
+        th:href="@{/style.css}">
+
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/librarian/reservations">
+      Бронирования
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>
+      Возврат книг
+    </h1>
+
+    <p class="subtitle">
+      Активные выдачи книг читателям
+    </p>
+
+  </div>
+
+
+  <!-- Сообщение об успешном возврате -->
+
+  <div class="success-message"
+       th:if="${successMessage}"
+       th:text="${successMessage}">
+  </div>
+
+
+  <!-- Сообщение об ошибке -->
+
+  <div class="error-message"
+       th:if="${errorMessage}"
+       th:text="${errorMessage}">
+  </div>
+
+
+  <div class="table-card">
+
+    <table class="books-table">
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Читатель
+        </th>
+
+        <th>
+          Книга
+        </th>
+
+        <th>
+          Экземпляр
+        </th>
+
+        <th>
+          Дата выдачи
+        </th>
+
+        <th>
+          Вернуть до
+        </th>
+
+        <th>
+          Действие
+        </th>
+
+      </tr>
+
+      </thead>
+
+
+      <tbody>
+
+      <tr th:each="loan : ${loans}">
+
+        <!-- Читатель -->
+
+        <td
+                th:text="${loan.user.lastName + ' ' + loan.user.firstName}">
+          Иван Иванов
+        </td>
+
+
+        <!-- Книга -->
+
+        <td
+                class="book-title"
+                th:text="${loan.copy.book.title}">
+          Война и мир
+        </td>
+
+
+        <!-- Номер экземпляра -->
+
+        <td
+                th:text="${loan.copy.inventoryNumber}">
+          BK-001-1
+        </td>
+
+
+        <!-- Дата выдачи -->
+
+        <td
+                th:text="${#temporals.format(
+                            loan.issueDate,
+                            'dd.MM.yyyy'
+                        )}">
+          30.09.2026
+        </td>
+
+
+        <!-- Срок возврата -->
+
+        <td
+                th:text="${#temporals.format(
+                            loan.dueDate,
+                            'dd.MM.yyyy'
+                        )}">
+          10.10.2026
+        </td>
+
+
+        <!-- Кнопка возврата -->
+
+        <td>
+
+          <form
+                  method="post"
+                  th:action="@{/librarian/returns/{id}(id=${loan.id})}">
+
+            <button
+                    type="submit"
+                    class="button button-small">
+
+              ↩️ Вернуть
+
+            </button>
+
+          </form>
+
+        </td>
+
+      </tr>
+
+
+      <!-- Если активных выдач нет -->
+
+      <tr th:if="${#lists.isEmpty(loans)}">
+
+        <td colspan="6"
+            style="text-align: center; padding: 25px;">
+
+          Сейчас нет книг, выданных читателям.
+
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- Возврат в кабинет -->
+
+  <div style="margin-top: 20px;">
+
+    <a href="/librarian"
+       class="button">
+
+      ← Вернуться в кабинет
+
+    </a>
+
+  </div>
+
+</div>
+
 </body>
+
 </html>

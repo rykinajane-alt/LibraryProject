@@ -1,64 +1,84 @@
-
 package ru.library.libraryproject.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
+
+                        // Доступ без авторизации
                         .requestMatchers(
                                 "/login",
                                 "/register",
                                 "/style.css",
-                                "/library-background.png",
-                                "/images/**"
+                                "/library-background.png"
                         ).permitAll()
 
-                        .requestMatchers("/reader/**").hasRole("READER")
-                        .requestMatchers("/librarian/**").hasRole("LIBRARIAN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // Книги доступны авторизованным пользователям
+                        .requestMatchers("/books")
+                        .authenticated()
 
-                        .requestMatchers("/books").authenticated()
-                        .anyRequest().authenticated()
+                        // Раздел читателя
+                        .requestMatchers("/reader/**")
+                        .hasRole("READER")
+
+                        // Раздел библиотекаря
+                        .requestMatchers("/librarian/**")
+                        .hasRole("LIBRARIAN")
+
+                        // Раздел администратора
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        // Остальные страницы требуют авторизации
+                        .anyRequest()
+                        .authenticated()
                 )
 
                 .formLogin(form -> form
+
                         .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .usernameParameter("username")
-                        .passwordParameter("password")
+
+                        // Перенаправление в зависимости от роли
                         .successHandler((request, response, authentication) -> {
-                            boolean isAdmin = authentication.getAuthorities()
-                                    .stream()
-                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-                            boolean isLibrarian = authentication.getAuthorities()
+                            String role = authentication.getAuthorities()
                                     .stream()
-                                    .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"));
+                                    .findFirst()
+                                    .map(authority -> authority.getAuthority())
+                                    .orElse("");
 
-                            if (isAdmin) {
-                                response.sendRedirect("/admin");
-                            } else if (isLibrarian) {
-                                response.sendRedirect("/librarian");
-                            } else {
+                            if (role.equals("ROLE_READER")) {
                                 response.sendRedirect("/reader");
+
+                            } else if (role.equals("ROLE_LIBRARIAN")) {
+                                response.sendRedirect("/librarian");
+
+                            } else if (role.equals("ROLE_ADMIN")) {
+                                response.sendRedirect("/admin");
+
+                            } else {
+                                response.sendRedirect("/books");
                             }
                         })
-                        .failureUrl("/login?error")
+
                         .permitAll()
                 )
 

@@ -1,10 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Бронирования — Библиотека</title>
+
+  <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+    <a href="/librarian">Личный кабинет</a>
+    <a href="/books">Книги</a>
+    <a href="/logout">Выйти</a>
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>Бронирования</h1>
+
+    <p class="subtitle">
+      Активные бронирования читателей
+    </p>
+
+  </div>
+
+
+  <!-- Сообщение об успешной выдаче -->
+
+  <div class="success-message"
+       th:if="${successMessage}"
+       th:text="${successMessage}">
+  </div>
+
+
+  <!-- Сообщение об ошибке -->
+
+  <div class="error-message"
+       th:if="${errorMessage}"
+       th:text="${errorMessage}">
+  </div>
+
+
+  <div class="table-card">
+
+    <table class="books-table">
+
+      <thead>
+
+      <tr>
+        <th>Читатель</th>
+        <th>Книга</th>
+        <th>Дата бронирования</th>
+        <th>Статус</th>
+        <th>Действие</th>
+      </tr>
+
+      </thead>
+
+
+      <tbody>
+
+      <tr th:each="reservation : ${reservations}">
+
+        <td
+                th:text="${reservation.user.lastName + ' ' + reservation.user.firstName}">
+        </td>
+
+
+        <td
+                class="book-title"
+                th:text="${reservation.book.title}">
+        </td>
+
+
+        <td
+                th:text="${#temporals.format(
+                            reservation.reservationDate,
+                            'dd.MM.yyyy HH:mm'
+                        )}">
+        </td>
+
+
+        <td>
+
+                    <span class="book-available">
+                        🟢 ACTIVE
+                    </span>
+
+        </td>
+
+
+        <td>
+
+          <form
+                  method="post"
+                  th:action="@{/librarian/reservations/{id}/issue(id=${reservation.id})}">
+
+            <button
+                    type="submit"
+                    class="button button-small">
+
+              📖 Выдать
+
+            </button>
+
+          </form>
+
+        </td>
+
+      </tr>
+
+
+      <tr th:if="${#lists.isEmpty(reservations)}">
+
+        <td colspan="5">
+          Активных бронирований нет.
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- Возврат в кабинет -->
+
+  <div style="margin-top: 20px;">
+
+    <a href="/librarian"
+       class="button">
+      ← Вернуться в кабинет
+    </a>
+
+  </div>
+
+</div>
+
 </body>
 </html>

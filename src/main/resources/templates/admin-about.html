@@ -1,10 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>О разработчике — Библиотека</title>
+
+  <link rel="stylesheet"
+        href="/style.css">
+
 </head>
+
+
 <body>
-$END$
+
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/admin">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+
+  <div class="books-header">
+
+    <h1>
+      О разработчике
+    </h1>
+
+    <p class="subtitle">
+      Информация об авторе информационной системы
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+
+    <h2>
+      Информационно-справочная система библиотеки
+    </h2>
+
+
+    <div class="profile-card">
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Автор
+                </span>
+
+        <span>
+                    Евгения Рыкина
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Назначение
+                </span>
+
+        <span>
+                    Автоматизация работы библиотеки
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Основные возможности
+                </span>
+
+        <span>
+                    Работа с книгами, читателями,
+                    выдачами и бронированиями
+                </span>
+
+      </div>
+
+
+    </div>
+
+
+    <h2 style="margin-top: 30px;">
+      Используемые технологии
+    </h2>
+
+
+    <div class="profile-card">
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Язык программирования
+                </span>
+
+        <span>
+                    Java 17
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Framework
+                </span>
+
+        <span>
+                    Spring Boot
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Работа с данными
+                </span>
+
+        <span>
+                    Spring Data JPA / Hibernate
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    База данных
+                </span>
+
+        <span>
+                    MySQL
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Представление
+                </span>
+
+        <span>
+                    Thymeleaf / HTML / CSS
+                </span>
+
+      </div>
+
+
+      <div class="profile-row">
+
+                <span class="profile-label">
+                    Безопасность
+                </span>
+
+        <span>
+                    Spring Security
+                </span>
+
+      </div>
+
+
+    </div>
+
+
+    <h2 style="margin-top: 30px;">
+      Роли пользователей
+    </h2>
+
+
+    <div class="profile-card">
+
+
+      <div class="profile-row"
+           style="display: block;">
+
+                <span class="profile-label"
+                      style="display: block; margin-bottom: 8px;">
+
+                    Читатель
+
+                </span>
+
+        <span style="display: block; line-height: 1.5;">
+
+                    Поиск книг, бронирование и просмотр
+                    своих выдач.
+
+                </span>
+
+      </div>
+
+
+      <div class="profile-row"
+           style="display: block;">
+
+                <span class="profile-label"
+                      style="display: block; margin-bottom: 8px;">
+
+                    Библиотекарь
+
+                </span>
+
+        <span style="display: block; line-height: 1.5;">
+
+                    Работа с книгами, читателями,
+                    выдачами, возвратами и бронированиями.
+
+                </span>
+
+      </div>
+
+
+      <div class="profile-row"
+           style="display: block;">
+
+                <span class="profile-label"
+                      style="display: block; margin-bottom: 8px;">
+
+                    Администратор
+
+                </span>
+
+        <span style="display: block; line-height: 1.5;">
+
+                    Управление пользователями и просмотр
+                    статистики системы.
+
+                </span>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/admin"
+       class="button">
+
+      ← Вернуться в кабинет
+
+    </a>
+
+  </div>
+
+
+</div>
+
+
 </body>
+
 </html>

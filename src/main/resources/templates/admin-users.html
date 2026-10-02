@@ -1,10 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Пользователи — Библиотека</title>
+
+  <link rel="stylesheet"
+        href="/style.css">
+
 </head>
+
+
 <body>
-$END$
+
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/admin">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+
+  <div class="books-header">
+
+    <h1>
+      Пользователи
+    </h1>
+
+    <p class="subtitle">
+      Управление пользователями и их правами доступа
+    </p>
+
+  </div>
+
+
+  <div class="success-message"
+       th:if="${successMessage}"
+       th:text="${successMessage}">
+  </div>
+
+
+  <div class="error-message"
+       th:if="${errorMessage}"
+       th:text="${errorMessage}">
+  </div>
+
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Фамилия
+        </th>
+
+        <th>
+          Имя
+        </th>
+
+        <th>
+          Логин
+        </th>
+
+        <th>
+          Email
+        </th>
+
+        <th>
+          Роль
+        </th>
+
+        <th>
+          Статус
+        </th>
+
+        <th>
+          Действие
+        </th>
+
+      </tr>
+
+      </thead>
+
+
+      <tbody>
+
+
+      <tr th:each="user : ${users}">
+
+        <td th:text="${user.lastName}">
+          Иванов
+        </td>
+
+
+        <td th:text="${user.firstName}">
+          Иван
+        </td>
+
+
+        <td th:text="${user.login}">
+          ivan
+        </td>
+
+
+        <td th:text="${user.email}">
+          ivan@example.com
+        </td>
+
+
+        <td>
+
+          <form method="post"
+                th:action="@{/admin/users/{id}/update(id=${user.id})}">
+
+            <select name="roleId">
+
+              <option
+                      th:each="role : ${roles}"
+                      th:value="${role.id}"
+                      th:text="${role.name}"
+                      th:selected="${role.id == user.role.id}">
+              </option>
+
+            </select>
+
+        </td>
+
+
+        <td>
+
+          <select name="status">
+
+            <option value="ACTIVE"
+                    th:selected="${user.status == 'ACTIVE'}">
+              ACTIVE
+            </option>
+
+            <option value="BLOCKED"
+                    th:selected="${user.status == 'BLOCKED'}">
+              BLOCKED
+            </option>
+
+          </select>
+
+        </td>
+
+
+        <td>
+
+          <button
+                  type="submit"
+                  class="button button-small">
+
+            Сохранить
+
+          </button>
+
+          </form>
+
+        </td>
+
+      </tr>
+
+
+      <tr th:if="${#lists.isEmpty(users)}">
+
+        <td colspan="7"
+            style="text-align: center; padding: 25px;">
+
+          Пользователей пока нет.
+
+        </td>
+
+      </tr>
+
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/admin"
+       class="button">
+
+      ← Вернуться в кабинет
+
+    </a>
+
+  </div>
+
+
+</div>
+
+
 </body>
+
 </html>

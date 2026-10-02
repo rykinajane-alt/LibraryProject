@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Читатели — Библиотека</title>
+
+  <link rel="stylesheet"
+        th:href="@{/style.css}">
+
 </head>
+
 <body>
-$END$
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/librarian/reservations">
+      Бронирования
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+  <div class="books-header">
+
+    <h1>Читатели</h1>
+
+    <p class="subtitle">
+      Зарегистрированные читатели библиотеки
+    </p>
+
+  </div>
+
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Фамилия
+        </th>
+
+        <th>
+          Имя
+        </th>
+
+        <th>
+          Логин
+        </th>
+
+        <th>
+          Email
+        </th>
+
+        <th>
+          Действие
+        </th>
+
+      </tr>
+
+      </thead>
+
+      <tbody>
+
+      <tr th:each="reader : ${readers}">
+
+        <td th:text="${reader.lastName}">
+          Иванов
+        </td>
+
+        <td th:text="${reader.firstName}">
+          Иван
+        </td>
+
+        <td th:text="${reader.login}">
+          ivan
+        </td>
+
+        <td th:text="${reader.email}">
+          ivan@example.com
+        </td>
+
+        <td>
+
+          <a th:href="@{/librarian/readers/{id}(id=${reader.id})}"
+             class="button">
+            Посмотреть
+          </a>
+
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div style="margin-top: 20px;">
+
+    <a href="/librarian"
+       class="button">
+      ← Вернуться в кабинет
+    </a>
+
+  </div>
+
+</div>
+
 </body>
+
 </html>

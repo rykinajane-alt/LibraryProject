@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Добавление автора — Библиотека</title>
+
+  <link rel="stylesheet" href="/style.css">
+
 </head>
+
+
 <body>
-$END$
+
+
+<header class="header">
+
+  <div class="logo">
+    📚 БИБЛИОТЕКА
+  </div>
+
+  <div>
+
+    <a href="/librarian">
+      Личный кабинет
+    </a>
+
+    <a href="/books">
+      Книги
+    </a>
+
+    <a href="/logout">
+      Выйти
+    </a>
+
+  </div>
+
+</header>
+
+
+<div class="page">
+
+
+  <div class="books-header">
+
+    <h1>
+      Добавление автора
+    </h1>
+
+    <p class="subtitle">
+      Добавление нового автора в справочник
+    </p>
+
+  </div>
+
+
+  <!-- Сообщение об ошибке -->
+
+  <div
+          class="error-message"
+          th:if="${errorMessage}"
+          th:text="${errorMessage}">
+
+  </div>
+
+
+  <div class="card">
+
+
+    <form
+            method="post"
+            action="/librarian/authors/add">
+
+
+      <!-- Фамилия -->
+
+      <div class="form-group">
+
+        <label for="lastName">
+          Фамилия *
+        </label>
+
+        <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                maxlength="100"
+                placeholder="Введите фамилию">
+
+      </div>
+
+
+      <!-- Имя -->
+
+      <div class="form-group">
+
+        <label for="firstName">
+          Имя *
+        </label>
+
+        <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                maxlength="100"
+                placeholder="Введите имя">
+
+      </div>
+
+
+      <!-- Отчество -->
+
+      <div class="form-group">
+
+        <label for="middleName">
+          Отчество
+        </label>
+
+        <input
+                type="text"
+                id="middleName"
+                name="middleName"
+                maxlength="100"
+                placeholder="Введите отчество">
+
+      </div>
+
+
+      <!-- Кнопки -->
+
+      <div style="margin-top: 25px;">
+
+        <button
+                type="submit"
+                class="button">
+
+          ➕ Добавить автора
+
+        </button>
+
+
+        <a
+                href="/librarian/books/add"
+                class="button button-small"
+                style="margin-left: 10px;">
+
+          Отмена
+
+        </a>
+
+      </div>
+
+
+    </form>
+
+
+  </div>
+
+
+</div>
+
+
 </body>
+
 </html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги — Библиотека</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        📚 БИБЛИОТЕКА
+    </div>
+
+    <div>
+
+        <!-- Личный кабинет читателя -->
+        <a
+                th:if="${#authorization.expression('hasRole(''READER'')')}"
+                href="/reader">
+            Личный кабинет
+        </a>
+
+        <!-- Рабочее место библиотекаря -->
+        <a
+                th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}"
+                href="/librarian">
+            Личный кабинет
+        </a>
+
+        <!-- Панель администратора -->
+        <a
+                th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                href="/admin">
+            Личный кабинет
+        </a>
+
+        <a href="/books">
+            Книги
+        </a>
+
+        <a href="/logout">
+            Выйти
+        </a>
+
+    </div>
+
+</header>
+
+
+<div class="page books-page">
+
+    <div class="books-header">
+
+        <h1>
+            Книги библиотеки
+        </h1>
+
+        <!-- Подпись для читателя -->
+        <p
+                class="subtitle"
+                th:if="${#authorization.expression('hasRole(''READER'')')}">
+
+            Поиск и просмотр доступных книг
+
+        </p>
+
+        <!-- Подпись для библиотекаря -->
+        <p
+                class="subtitle"
+                th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}">
+
+            Просмотр каталога и количества экземпляров книг
+
+        </p>
+
+    </div>
+
+
+    <!-- Сообщение об успешном действии -->
+
+    <div
+            class="success-message"
+            th:if="${successMessage}"
+            th:text="${successMessage}">
+
+    </div>
+
+
+    <!-- Сообщение об ошибке -->
+
+    <div
+            class="error-message"
+            th:if="${errorMessage}"
+            th:text="${errorMessage}">
+
+    </div>
+
+
+    <!-- Поиск -->
+
+    <div class="search-panel">
+
+        <form
+                method="get"
+                action="/books"
+                class="search-form">
+
+            <input
+                    type="text"
+                    name="query"
+                    placeholder="Поиск по названию или автору">
+
+            <button
+                    type="submit"
+                    class="button">
+
+                Найти
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Сортировка -->
+
+    <div class="sort-panel">
+
+        <form
+                method="get"
+                action="/books"
+                class="sort-form">
+
+            <label for="sort">
+                Сортировка:
+            </label>
+
+            <select
+                    id="sort"
+                    name="sort">
+
+                <option value="">
+                    Без сортировки
+                </option>
+
+                <option value="titleAsc">
+                    Название: А–Я
+                </option>
+
+                <option value="titleDesc">
+                    Название: Я–А
+                </option>
+
+                <option value="yearAsc">
+                    Год: по возрастанию
+                </option>
+
+                <option value="yearDesc">
+                    Год: по убыванию
+                </option>
+
+            </select>
+
+            <button
+                    type="submit"
+                    class="button button-small">
+
+                Сортировать
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Добавление книги для библиотекаря -->
+
+    <div
+            th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}"
+            style="margin-bottom: 20px;">
+
+        <a
+                href="/librarian/books/add"
+                class="button">
+
+            ➕ Добавить книгу
+
+        </a>
+
+    </div>
+
+
+    <!-- Таблица книг -->
+
+    <div class="table-card">
+
+        <table class="books-table">
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    Название
+                </th>
+
+                <th>
+                    Автор
+                </th>
+
+                <th>
+                    ISBN
+                </th>
+
+                <th>
+                    Год
+                </th>
+
+                <th>
+                    Жанр
+                </th>
+
+
+                <!-- Колонки библиотекаря -->
+
+                <th
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}">
+
+                    Всего
+
+                </th>
+
+                <th
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}">
+
+                    Доступно
+
+                </th>
+
+                <th
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}">
+
+                    Выдано
+
+                </th>
+
+
+                <!-- Колонка читателя -->
+
+                <th
+                        th:if="${#authorization.expression('hasRole(''READER'')')}">
+
+                    Доступность
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="book : ${books}">
+
+                <!-- Название -->
+
+                <td class="book-title">
+
+                    <a
+                            th:href="@{/books/{id}(id=${book.id})}"
+                            th:text="${book.title}"
+                            style="color: inherit; text-decoration: none;">
+
+                        Название книги
+
+                    </a>
+
+                </td>
+
+
+                <!-- Автор -->
+
+                <td
+                        th:text="${book.authors[0].lastName + ' ' + book.authors[0].firstName}">
+
+                </td>
+
+
+                <!-- ISBN -->
+
+                <td
+                        th:text="${book.isbn}">
+
+                </td>
+
+
+                <!-- Год -->
+
+                <td
+                        th:text="${book.publicationYear}">
+
+                </td>
+
+
+                <!-- Жанр -->
+
+                <td
+                        th:text="${book.genre.name}">
+
+                </td>
+
+
+                <!-- ======================== -->
+                <!-- БИБЛИОТЕКАРЬ -->
+                <!-- ======================== -->
+
+
+                <!-- Всего экземпляров -->
+
+                <td
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}"
+                        th:text="${totalCopies[book.id]}">
+
+                </td>
+
+
+                <!-- Доступно -->
+
+                <td
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}"
+                        th:text="${availableCopies[book.id]}">
+
+                </td>
+
+
+                <!-- Выдано -->
+
+                <td
+                        th:if="${#authorization.expression('hasRole(''LIBRARIAN'')')}"
+                        th:text="${issuedCopies[book.id]}">
+
+                </td>
+
+
+                <!-- ======================== -->
+                <!-- ЧИТАТЕЛЬ -->
+                <!-- ======================== -->
+
+
+                <td
+                        th:if="${#authorization.expression('hasRole(''READER'')')}">
+
+
+                    <!-- Книга уже забронирована -->
+
+                    <div
+                            th:if="${reserved[book.id]}">
+
+                        <span class="book-reserved">
+
+                            🔖 В бронированиях
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Книга не забронирована -->
+
+                    <div
+                            th:unless="${reserved[book.id]}">
+
+
+                        <!-- Есть свободный экземпляр -->
+
+                        <div
+                                th:if="${availability[book.id]}">
+
+                            <span class="book-available">
+
+                                🟢 Доступна
+
+                            </span>
+
+
+                            <form
+                                    method="post"
+                                    th:action="@{/reader/books/{id}/reserve(id=${book.id})}"
+                                    style="margin-top: 8px;">
+
+                                <button
+                                        type="submit"
+                                        class="button button-small">
+
+                                    🔖 Забронировать
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <!-- Все экземпляры заняты -->
+
+                        <div
+                                th:unless="${availability[book.id]}">
+
+                            <span class="book-unavailable">
+
+                                🔒 Недоступна — все экземпляры заняты
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
