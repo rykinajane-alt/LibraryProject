@@ -1,0 +1,4 @@
+e.rykina 12345 - читатель
+rykin.and 12345 - читатель
+soboleva.a 12345 - библиотекарь
+admin library123 - администратор
